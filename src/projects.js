@@ -18,3 +18,31 @@ export default function Projects() {
     </div>
   );
 }
+
+
+// pages/projects.js
+export async function getServerSideProps() {
+    // Fetch data or interact with an API here
+    const projects = await fetch('https://api.example.com/projects')
+      .then(res => res.json());
+  
+    return {
+      props: { projects },
+    };
+  }
+  
+  export default function Projects({ projects }) {
+    return (
+      <div>
+        <h1>My Projects</h1>
+        {projects.map(project => (
+          <div key={project.id}>
+            <h2>{project.name}</h2>
+            <Image src={project.image} alt={project.name} width={500} height={300} />
+            <p>{project.description}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  
